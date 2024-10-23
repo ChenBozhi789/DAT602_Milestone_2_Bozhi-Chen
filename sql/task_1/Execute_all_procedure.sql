@@ -21,6 +21,9 @@ SELECT * FROM tb_map;
 CALL placing_item_on_tile(1);
 SELECT * FROM tb_tile_item;
 
+-- NOTE: For this procedure, you should according tb_tile and execute it, such as move an item from a full tile to empty tile. Thank you.
+-- CALL move_an_item(1, 1, 0, 1);
+
 -- CALL add_plyer procedure
 -- 	1. Player doesn't exists -> Insert new player
 CALL add_player('Tester1', '111@qq.com', '5588465');

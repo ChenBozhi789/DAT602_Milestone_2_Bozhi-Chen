@@ -113,6 +113,7 @@
     <Compile Include="AdminManagerForm.Designer.cs">
       <DependentUpon>AdminManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseAccessObject.cs" />
     <Compile Include="GamePlayForm.cs">
       <SubType>Form</SubType>
     </Compile>

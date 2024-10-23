@@ -50,7 +50,7 @@ CREATE TABLE tb_Tile (
 	MapID INT(10),
 	TileRow INT(10),
 	TileCol INT(10),
-	ItemTYpe INT NOT NULL DEFAULT 0,
+	ItemType INT NOT NULL DEFAULT 0,
     IsEmptied BIT DEFAULT 1,
     IsOccupied BIT DEFAULT 0,
 	FOREIGN KEY (MapID) REFERENCES tb_Map(MapID)
@@ -537,7 +537,7 @@ BEGIN
                 
                 -- Update tile occupied state after movement
 				UPDATE tb_Tile                
-				SET ItemTYpe = 0,
+				SET ItemTpe = 0,
 					IsEmptied = 1
 				-- Picking up items off a tile 
                 WHERE TileID = target_tile_id;
@@ -567,7 +567,7 @@ BEGIN
                 
                 -- Update tile occupied state after movement
 				UPDATE tb_Tile                
-				SET ItemTYpe = 0,
+				SET ItemType = 0,
 					IsEmptied = 1
 				-- Picking up items off a tile 
                 WHERE TileID = target_tile_id;
@@ -588,6 +588,57 @@ END//
 DELIMITER ;
 
 -- 8. Move an Item (NPC effect). [4]
+DROP PROCEDURE IF EXISTS move_an_item;
+DELIMITER //
+CREATE PROCEDURE move_an_item(IN pMapID INT, IN pTileID INT, IN pTileRow INT, IN pTileCol INT)
+BEGIN
+	DECLARE current_tile_emptied_state INT;
+    DECLARE current_tile_item INT;
+    DECLARE current_tile_item_type INT;    
+    DECLARE target_tile_id INT;
+	DECLARE target_tile_emptied_state INT;
+
+	START TRANSACTION;
+
+	-- Check if tile has item
+	SELECT IsEmptied, ItemType INTO current_tile_emptied_state, current_tile_item_type
+    FROM tb_Tile
+    WHERE TileID = pTileID;
+    
+	SELECT ItemID INTO current_tile_item
+    FROM tb_Tile_Item
+    WHERE TileID = pTileID;
+    
+	SELECT TileID, IsEmptied INTO target_tile_id, target_tile_emptied_state
+    FROM tb_Tile 
+    WHERE TileRow = pTileRow AND
+		TileCol = pTileCol;
+    
+    IF (current_tile_emptied_state = 0 AND target_tile_emptied_state = 1)
+    THEN
+		-- Update target tile state
+		UPDATE tb_Tile
+        SET IsEmptied = 1, ItemType = 0
+		WHERE TileID = pTileID;
+    
+		-- Update target tile state
+		UPDATE tb_Tile
+        SET IsEmptied = 0, ItemType = current_tile_item_type
+        WHERE TileRow = pTileRow AND
+			TileCol = pTileCol;
+            
+		UPDATE tb_Tile_Item
+        SET TileID = target_tile_id
+        WHERE TileID = pTileID;
+        
+		SELECT "Move an item Successfully!" AS Message;
+        COMMIT;
+	ELSE
+		SELECT "Move an item Fail!" AS Message;
+        ROLLBACK;
+    END IF;
+END//
+DELIMITER ;
 
 -- 9. Kill running games. [4]
 DROP PROCEDURE IF EXISTS kill_running_game;

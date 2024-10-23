@@ -16,7 +16,7 @@ namespace DAT602_MIlestone_Two
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AdminMainForm());
+            Application.Run(new RegistrationForm());
         }
     }
 }
