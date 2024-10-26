@@ -19,11 +19,12 @@ namespace DAT602_MIlestone_Two
 
         private void CreateBoard(int MapID)
         {
+            UserDAO userDAO = new UserDAO();
             Map map = new Map
             {
                 MapID = MapID
             };
-            UserDAO userDAO = new UserDAO();
+            
             List<Tile> tiles = userDAO.GetTiles(map);
 
             foreach (Tile tile in tiles)
@@ -67,12 +68,12 @@ namespace DAT602_MIlestone_Two
                 if (clickedButton.BackColor == Color.White)
                 {
                     // Item is diamond
-                    if (tile.ItemType == 1)
+                    if (tile.ItemTypeID == 1)
                     {
                         clickedButton.BackColor = Color.Red;
                     }
                     // Item is bomb
-                    else if (tile.ItemType == 2)
+                    else if (tile.ItemTypeID == 2)
                     {
                         clickedButton.BackColor = Color.Black;
                     }
@@ -89,6 +90,31 @@ namespace DAT602_MIlestone_Two
         private void GamePlayForm_Load(object sender, EventArgs e)
         {
             CreateBoard(GlobalVariable.MapID);
+        }
+
+        private void btnBackToPage_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            //this.Close();
+            MainGameLobby mainGameLobby = new MainGameLobby();
+            mainGameLobby.ShowDialog();
+        }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            int TileID = Convert.ToInt16(txtStartingTile.Text);
+            int targetTileID = Convert.ToInt16(txtTargetTile.Text);
+            UserDAO userDAO = new UserDAO();
+            bool moveResult = userDAO.move_an_item(TileID, targetTileID);
+
+            if (moveResult)
+            {
+                MessageBox.Show("Move successfully");
+            }
+            else
+            {
+                MessageBox.Show("Move failed");
+            }
         }
     }
 }

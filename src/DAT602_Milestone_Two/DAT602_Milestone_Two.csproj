@@ -121,6 +121,7 @@
       <DependentUpon>GamePlayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariable.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>

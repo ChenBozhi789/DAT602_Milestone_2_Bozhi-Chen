@@ -30,15 +30,14 @@ namespace DAT602_MIlestone_Two
             }
 
             UserDAO userDAO = new UserDAO();
-
             // call Login function of userDAO
             int isAuthenticated = userDAO.Login(email, password);
 
-            // 根据登录结果做出响应
+            // Respond based on login results
             if (isAuthenticated > 0)
             {
                 MessageBox.Show("Login Successfully！");
-                
+                this.Hide();
                 // Open the main game lobby
                 MainGameLobby mainGameLobby = new MainGameLobby();
                 mainGameLobby.ShowDialog();

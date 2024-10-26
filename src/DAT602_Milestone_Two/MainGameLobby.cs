@@ -17,9 +17,9 @@ namespace DAT602_MIlestone_Two
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnNewgame1_Click(object sender, EventArgs e)
         {
-            int maxRow = Convert.ToInt32(txtMaxrow.Text);
+            int maxRow = Convert.ToInt32(txtMaxRow.Text);
             int maxCol = Convert.ToInt32(txtMaxCol.Text);
 
             Map map = new Map
@@ -37,13 +37,8 @@ namespace DAT602_MIlestone_Two
                 map.MapID = currentMapID;
                 userDAO.Placing_an_item_on_a_tile(map);                
             }
-
-            GamePlayForm gamePlayForm = new GamePlayForm();
-            gamePlayForm.ShowDialog();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
+            
+            this.Hide();
             GamePlayForm gamePlayForm = new GamePlayForm();
             gamePlayForm.ShowDialog();
         }
@@ -54,12 +49,9 @@ namespace DAT602_MIlestone_Two
             adminMainForm.ShowDialog();
         }
 
-        private void btnDeleteGame_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
-            int currentGameID = Convert.ToInt32(txtDeleteGame.Text);
-            UserDAO userDAO = new UserDAO();
-            string deleteMessage = userDAO.KillRunningGame(currentGameID);
-            MessageBox.Show(deleteMessage);
+            this.Close();
         }
     }
 }

@@ -51,8 +51,8 @@ namespace DAT602_MIlestone_Two
             string username = txtUsername.Text;
             string email = txtEmail.Text;
             string password = txtPwd.Text;
-            int lockstate = chkLocked.Checked ? 1 : 0;
-            int isadministrator = chkAdmin.Checked ? 1 : 0;
+            int lockstate = chkIsLocked.Checked ? 1 : 0;
+            int isadministrator = chkIsAdmin.Checked ? 1 : 0;
 
             // Create a instance of the UserDAO class
             UserDAO userDAO = new UserDAO();
@@ -110,8 +110,7 @@ namespace DAT602_MIlestone_Two
             }
         }
 
-
-        private void btnDel_Click(object sender, EventArgs e)
+        private void btnDelPlayer_Click(object sender, EventArgs e)
         {
             // Get user input from input fields
             string email = txtEmail.Text;

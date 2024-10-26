@@ -164,7 +164,6 @@ namespace DAT602_MIlestone_Two
                         cmd.ExecuteNonQuery();
                         return 1;
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -302,7 +301,45 @@ namespace DAT602_MIlestone_Two
                 }
             }
         }
+
         // 8. Move an Item (NPC effect)
+        public bool move_an_item(int itemID, int targetTileID)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "CALL move_an_item(@MapID, @ItemID, @TargetTileID);";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MapID", GlobalVariable.MapID);
+                        cmd.Parameters.AddWithValue("@ItemID", itemID);
+                        cmd.Parameters.AddWithValue("@TargetTileID", targetTileID);
+
+                        // Execute the stored procedure and handle result
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string resultMessage = reader.GetString(0);
+                                MessageBox.Show(resultMessage);
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+        }
 
         // 9. Kill running games
         public string KillRunningGame(int gameID)
@@ -459,19 +496,22 @@ namespace DAT602_MIlestone_Two
             }
         }
 
-
-
         // Getting data from tb_tile and used to create game board
         public List<Tile> GetTiles(Map map)
         {
-            List<Tile> tiles = new List<Tile>();
+            List<Tile> tiles = new List<Tile>();            
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    string query = "SELECT TileID, TileRow, TileCol, ItemType, IsEmptied, IsOccupied FROM tb_tile WHERE MapID = @MapID;";
+                    string query =
+                        @"SELECT t.TileID, t.TileRow, t.TileCol, t.IsEmptied, t.IsOccupied, COALESCE(tb_Item.ItemTypeID, 0) AS ItemTypeID
+                        FROM tb_Tile t
+                        LEFT JOIN tb_Tile_Item ON t.TileID = tb_Tile_Item.TileID
+                        LEFT JOIN tb_Item ON tb_Tile_Item.ItemID = tb_Item.ItemID
+                        WHERE t.MapID = @MapID;";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@MapID", map.MapID);
@@ -486,9 +526,9 @@ namespace DAT602_MIlestone_Two
                                     TileID = reader.GetInt32("TileID"),
                                     TileRow = reader.GetInt32("TileRow"),
                                     TileCol = reader.GetInt32("TileCol"),
-                                    ItemType = reader.GetInt32("ItemType"),
                                     IsEmptied = reader.GetBoolean("IsEmptied"),
-                                    IsOccupied = reader.GetBoolean("IsOccupied")
+                                    IsOccupied = reader.GetBoolean("IsOccupied"),
+                                    ItemTypeID = reader.GetInt32("ItemTypeID")
                                 };
                                 // Store data in the list
                                 tiles.Add(tile);

@@ -4,6 +4,7 @@ CREATE DATABASE DAT602m2t1db;
 USE DAT602m2t1db;
 
 SET SQL_SAFE_UPDATES = 0;
+SET GLOBAL log_bin_trust_function_creators = 1;
 
 DROP TABLE IF EXISTS tb_Game; 
 DROP TABLE IF EXISTS tb_Player;
@@ -59,8 +60,8 @@ CREATE TABLE tb_Tile (
 CREATE TABLE tb_ItemType (
     ItemTypeID INT(10) PRIMARY KEY AUTO_INCREMENT,
     Type VARCHAR(255),
-    Harm INT(10),
-    Heath INT(10)
+    Deduction INT(10),
+    `Point` INT(10)
 );
 
 CREATE TABLE tb_Item (
@@ -71,11 +72,11 @@ CREATE TABLE tb_Item (
 
 CREATE TABLE tb_Inventory_Item (
     PlayerID INT(10),
-    ItemID INT(10),
+    ItemTypeID INT(10),
     Quantity INT(10) DEFAULT 0,
-    PRIMARY KEY (PlayerID, ItemID),
-    FOREIGN KEY (PlayerID) REFERENCES tb_player(PlayerID),
-    FOREIGN KEY (ItemID) REFERENCES tb_Item(ItemID)
+    PRIMARY KEY (PlayerID, ItemTypeID),
+    FOREIGN KEY (PlayerID) REFERENCES tb_Player(PlayerID),
+    FOREIGN KEY (ItemTypeID) REFERENCES tb_ItemType(ItemTypeID)
 );
 
 CREATE TABLE tb_Tile_Item (
@@ -127,8 +128,8 @@ BEGIN
 			THEN
 				-- If logged successfully, update attempt to 0
 				UPDATE tb_Player
-				SET Attempt = 0
-				WHERE Email = pEmail;
+				SET Attempt = 0, LoginState = 1
+				WHERE Email = pEmail;                
 				SELECT 'You have Logged in successfully' AS Message;
 			ELSE
 				-- Valid credentials
@@ -139,6 +140,9 @@ BEGIN
 			END IF;
 		-- Account attempt greater than or equal 5
 		ELSE 
+			UPDATE tb_Player
+			SET LockState = 1
+			WHERE Email = pEmail;
 			SELECT 'You account has been locked out' AS Message;
 		END IF;
 	-- If account isn't exists
@@ -157,8 +161,7 @@ BEGIN
 	-- If account already exists in database
 	IF EXISTS (SELECT `Email` FROM tb_Player p WHERE p.Email = pEmail)
 	THEN 
-		SELECT 'Register failed!' AS Message;
-    
+		SELECT 'Register failed! This account alreadt exists' AS Message;    
 	-- Register successfully
 	ELSE
 		INSERT INTO tb_Player (`Username`, `Email`, `Password`) VALUES (pUsername, pEmail, pPassword);
@@ -169,11 +172,46 @@ END//
 DELIMITER ;
 
 -- 3. Laying out tiles on a game board. [4]
+DROP PROCEDURE IF EXISTS make_a_board;
+DELIMITER //
+CREATE PROCEDURE make_a_board(IN pMaxRow INT, IN pMaxCol INT)
+BEGIN	
+    DECLARE new_game_id INT;
+	DECLARE new_map_id INT;
+    DECLARE current_row INT DEFAULT 0;
+    DECLARE current_col INT DEFAULT 0;
+    
+    INSERT INTO tb_game (StartTime, EndTIme) VALUES (current_timestamp, DATE_ADD(current_timestamp, INTERVAL 1 DAY));
+    -- Get the GameID from the last insert
+    SET new_game_id = LAST_INSERT_ID();
+
+	INSERT INTO tb_Map (GameID, MaxRow, MaxColumn) VALUES (new_game_id, pMaxRow, pMaxCol);
+    -- Get the MapID from the last insert
+	SET new_map_id = LAST_INSERT_ID();
+    
+    -- Use WHILE loop to traverse each row and col
+    WHILE current_row < pMaxRow DO
+		WHILE current_col < pMaxCol DO
+            -- Insert data into tb_Tile
+            INSERT INTO tb_Tile (MapID, TileROW, TileCol, IsEmptied) VALUES (new_map_id, current_row, current_col, 1);
+            SET current_col = current_col + 1;            
+		END WHILE;
+        -- Initial current_col and plus current_row
+        SET current_col = 0;
+		SET current_row = current_row + 1;
+	END WHILE;
+	SELECT 'Add tile successfully!' AS Message;
+    -- Getting last insert MapID
+    SELECT new_map_id AS MapID;
+END//
+DELIMITER ;
+
+-- 4. Placing an item on a tile. [4]
 -- This stored function for assigning type for each Tile
 DROP FUNCTION IF EXISTS assign_item_type;
 DELIMITER //
 CREATE FUNCTION assign_item_type() RETURNS INT
-DETERMINISTIC
+NOT DETERMINISTIC
 BEGIN
     -- item_type = 2 is bomb
     IF FLOOR(RAND() * 3) % 3 = 2 THEN
@@ -188,103 +226,76 @@ BEGIN
 END //
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS make_a_board;
-DELIMITER //
-CREATE PROCEDURE make_a_board(IN pMaxRow INT, IN pMaxCol INT)
-BEGIN	
-    DECLARE new_game_id INT;
-	DECLARE new_board_id INT;
-    DECLARE current_row INT DEFAULT 0;
-    DECLARE current_col INT DEFAULT 0;
-    DECLARE item_type INT DEFAULT 0;
-    
-    INSERT INTO tb_game (StartTime, EndTIme) VALUES (current_timestamp, current_timestamp);
-    SET new_game_id = LAST_INSERT_ID();
-
-	INSERT INTO tb_Map (GameID, MaxRow, MaxColumn) VALUES (new_game_id, pMaxRow, pMaxCol);
-    
-    -- Get last insert ID
-	SET new_board_id = LAST_INSERT_ID();
-    
-    -- Use WHILE loop to traverse each row and col
-    WHILE current_row < pMaxRow DO
-		WHILE current_col < pMaxCol DO
-			-- call assign_item_types to get item type
-			SET item_type = assign_item_type();
-            -- When item_type not equal to 0
-            -- Only item_type not equal to 0 will be stored in database
-            IF item_type <> 0
-            THEN
-				INSERT INTO tb_Tile (MapID, TileROW, TileCol, ItemTYpe, IsEmptied) VALUES (new_board_id, current_row, current_col, item_type, 0);
-			ELSE
-				INSERT INTO tb_Tile (MapID, TileROW, TileCol, ItemTYpe) VALUES (new_board_id, current_row, current_col, item_type);
-            END IF;
-            SET current_col = current_col + 1;
-            
-		END WHILE;
-        -- Initial current_col and plus current_row
-        SET current_col = 0;
-		SET current_row = current_row + 1;
-	END WHILE;
-	SELECT 'Add tile successfully!' AS Message;
-END//
-DELIMITER ;
-
--- 4. Placing an item on a tile. [4]
 DROP PROCEDURE IF EXISTS placing_item_on_tile;
 DELIMITER //
 CREATE PROCEDURE placing_item_on_tile(IN pMapID INT)
 BEGIN
-    DECLARE total_row INT DEFAULT 0;
-    DECLARE total_col INT DEFAULT 0;
+    DECLARE total_row INT;
+    DECLARE total_col INT;
     DECLARE current_row INT DEFAULT 0;
     DECLARE current_col INT DEFAULT 0;
     DECLARE current_tile_id INT DEFAULT 0;
+	DECLARE item_type INT DEFAULT 0;
+    DECLARE temp_tile_id INT;
+    DECLARE temp_item_id INT;
 	
-    -- Get max row size of board
-	SELECT MAX(TileRow) INTO total_row 
+	-- Insert data into tb_ItemType
+    INSERT INTO tb_ItemType (Type, Deduction, `Point`) VALUES ('diamond', 0, 10);
+	INSERT INTO tb_ItemType (Type, Deduction, `Point`) VALUES ('bomb', 5, 0);
+    
+	-- Get max row and col size of board
+	SELECT MAX(TileRow), MAX(TileCol) INTO total_row, total_col
     FROM tb_Tile 
     WHERE MapID = pMapid;
-    
-    -- Get max col size of board
-    SELECT MAX(TileCol) INTO total_col 
-    FROM tb_Tile 
-    WHERE MapID = pMapid;
-    
-    INSERT INTO tb_item (ItemTypeID) VALUES (1);
-	INSERT INTO tb_item (ItemTypeID) VALUES (2);
-                        
+
+	-- Check if the MapID is valid
     IF EXISTS (SELECT MapID FROM tb_map WHERE MapID = pMapID) 
-    THEN
+    THEN    
 		-- traverse the whole board
 		WHILE current_row <= total_row DO
-			WHILE current_col <= total_col DO
+			WHILE current_col <= total_col DO            
+				SELECT TileID INTO temp_tile_id
+				FROM tb_tile
+				WHERE TileRow = current_row AND 
+					TileCol = current_col;
             
-				-- Get current Tile_ID
-				SELECT TileID INTO current_tile_id
-                FROM tb_Tile
-                WHERE MapID = pMapID AND TileRow = current_row AND TileCol = current_col LIMIT 1;
-                
-                -- If the current_tile_id is not null, then according ItemTYpe to insert into tb_tile_item
-				IF current_tile_id IS NOT NULL
+                SET item_type = assign_item_type();
+                -- When ItemType is 1
+                IF item_type = 1
+                THEN					
+					INSERT INTO tb_Item (ItemTypeID) VALUES (1);
+                    -- Get ItemID from last insert
+					SET temp_item_id = LAST_INSERT_ID();
+                    
+                    INSERT INTO tb_Tile_Item (TileID, ItemID) VALUES (temp_tile_id, temp_item_id);
+                    
+					-- Update tile IsEmptied state in tb_tile
+                    UPDATE tb_Tile
+                    SET IsEmptied = 0
+                    WHERE TileRow = current_row AND
+						TileCol = current_col;
+				-- When ItemType is 2
+				ELSEIF item_type = 2
                 THEN
-					IF (SELECT ItemType FROM tb_tile WHERE MapID = pMapID AND TileRow = current_row AND TileCol = current_col) = 1
-					THEN						
-                        INSERT INTO tb_tile_item (TileID, ItemID) VALUES (current_tile_id, 1);                        
-					ELSEIF (SELECT ItemType FROM tb_tile WHERE MapID = pMapID AND TileRow = current_row AND TileCol = current_col) = 2
-                    THEN						
-						INSERT INTO tb_tile_item (TileID, ItemID) VALUES (current_tile_id, 2);                        
-					END IF;
-				END if;
-                
-                -- Initial current_col 
-                SET current_col = current_col + 1;     
-			END WHILE;			
-            
+					INSERT INTO tb_Item (ItemTypeID) VALUES (2);
+                    -- Get ItemID from last insert
+					SET temp_item_id = LAST_INSERT_ID();
+                    
+                    INSERT INTO tb_Tile_Item (TileID, ItemID) VALUES (temp_tile_id, temp_item_id);
+                    
+					-- Update tile IsEmptied state in tb_tile
+                    UPDATE tb_Tile
+                    SET IsEmptied = 0
+                    WHERE TileRow = current_row AND
+						TileCol = current_col;
+				END IF;
+				SET current_col = current_col + 1;     
+			END WHILE;
             -- Initial current_col and plus current_row
 			SET current_col = 0;
 			SET current_row = current_row + 1;
-        END WHILE;
+		END WHILE;
+		SELECT 'Add tile successfully!' AS Message;
 	ELSE
 		SELECT 'Invalid MapID, please check again!' AS Message;
     END IF;
@@ -299,7 +310,6 @@ BEGIN
 	DECLARE current_tile_id INT;
     DECLARE current_tile_row INT;
     DECLARE current_tile_col INT;
-    DECLARE current_tile_occupied_state BIT;
     DECLARE target_tile_id INT;
     DECLARE target_tile_occupied_state BIT;
 
@@ -362,8 +372,9 @@ CREATE PROCEDURE game_play_scoring(IN pPlayerID INT, IN pTileRow INT, IN pTileCo
 BEGIN
 	DECLARE current_tile_id INT;
     DECLARE current_tile_row INT;
-    DECLARE current_tile_col INT;
-    DECLARE current_tile_occupied_state BIT;
+    DECLARE current_tile_col INT;	
+    DECLARE current_item_id INT;
+    DECLARE current_item_type INT;
     DECLARE target_tile_id INT;
     DECLARE target_tile_occupied_state BIT;
 
@@ -389,23 +400,17 @@ BEGIN
     FROM tb_Tile
     WHERE TileID = target_tile_id;
     
-    -- Get player target tile position
-    SELECT TileID INTO target_tile_id
-    FROM tb_Tile
-    WHERE TileRow = pTileRow AND
-		TileCol = pTileCol;
-
-    -- If target tile is legal, update tb_game_player
+    -- WHen target tile is legal and absolute valud equal to 1
     IF target_tile_occupied_state = 0 AND 
-    ((ABS(pTileRow - current_tile_row) = 1 AND pTileCol = current_tile_col) OR
-    (pTileRow = current_tile_row AND ABS(pTileCol - current_tile_col) = 1))
+		((ABS(pTileRow - current_tile_row) = 1 AND pTileCol = current_tile_col) OR
+		(pTileRow = current_tile_row AND ABS(pTileCol - current_tile_col) = 1))
     THEN
 		-- Update original tile state
         UPDATE tb_tile
         SET IsOccupied = 0
         WHERE TileID = current_tile_id;
                 
-		-- Player movement implement
+		-- Update player position data
 		UPDATE tb_game_player
         SET TileID = target_tile_id
         WHERE PlayerID = pPlayerID;
@@ -418,42 +423,49 @@ BEGIN
         -- Check if tile is emptied
         IF (SELECT IsEmptied FROM tb_Tile WHERE TileID = target_tile_id) = 0
         THEN
-			-- If ItemType in Tile is 1
-			IF (SELECT ItemTYpe FROM tb_Tile WHERE TileID = target_tile_id) = 1
+			-- Check the ItemType on the target tile
+			SELECT ItemID INTO current_item_id
+			FROM tb_Tile_Item 
+			WHERE TileID = target_tile_id;
+            
+			IF current_item_id IS NOT NULL
 			THEN
-				UPDATE tb_game_player
-				SET Score = Score + 10
-				WHERE PlayerID = pPlayerID;
+				-- Get current ItemTypeID from tb_Item
+				SELECT ItemTypeID INTO current_item_type
+				FROM tb_Item
+				WHERE ItemID = current_item_id;
                 
-                -- Update tile occupied state after movement
-				UPDATE tb_Tile
-				SET IsEmptied = 1
-				WHERE TileID = target_tile_id;
+				IF current_item_type = 1
+				THEN
+					-- Player gains 10 points for picking up a Diamond
+					UPDATE tb_game_player
+					SET Score = Score + 10
+					WHERE PlayerID = pPlayerID;
                 
-				SELECT 'You get the Diamond! Score + 10!' AS Message;
-			-- If ItemType in Tile is 0
-			ELSEIF (SELECT ItemTYpe FROM tb_Tile WHERE TileID = target_tile_id) = 2
-            THEN
-				UPDATE tb_game_player
-				SET Score = Score - 5
-				WHERE PlayerID = pPlayerID;
+					-- Update IsEmptied state
+					UPDATE tb_Tile
+					SET IsEmptied = 1
+					WHERE TileID = target_tile_id;
+					SELECT 'You get the Diamond! Score + 10!' AS Message;
+				ELSEIF current_item_type = 2
+				THEN				
+					-- Player loses 5 points for picking up a Bomb
+					UPDATE tb_game_player
+					SET Score = Score - 5
+					WHERE PlayerID = pPlayerID;
                 
-                -- Update tile occupied state after movement
-                UPDATE tb_Tile
-				SET IsEmptied = 1
-				WHERE TileID = target_tile_id;
-                
-				SELECT 'You get the Bomb! Score - 5!' AS Message;
-			ELSE
-				SELECT 'Nothing happened' AS Message;
+					-- Update IsEmptied state
+					UPDATE tb_Tile
+					SET IsEmptied = 1
+					WHERE TileID = target_tile_id;
+					SELECT 'You get the Bomb! Score - 5!' AS Message;
+				END IF;
 			END IF;
-        ELSE
-        	SELECT 'Player movement successfully!' AS Message;
+            COMMIT;
         END IF;
-        COMMIT;        
-	ELSE
-		ROLLBACK;
+	ELSE		
         SELECT 'Player movement Fail!' AS Message;
+        ROLLBACK;
     END IF;
 END//
 DELIMITER ;
@@ -465,13 +477,11 @@ CREATE PROCEDURE acquire_item_to_inventory(IN pPlayerID INT, IN pTileRow INT, IN
 BEGIN
 	DECLARE current_tile_id INT;
     DECLARE current_tile_row INT;
-    DECLARE current_tile_col INT;
-    DECLARE current_tile_occupied_state BIT;
+    DECLARE current_tile_col INT;	
+    DECLARE current_item_id INT;
+    DECLARE current_item_type INT;
     DECLARE target_tile_id INT;
     DECLARE target_tile_occupied_state BIT;
-    DECLARE current_item_id INT;
-    DECLARE item_type INT;
-    DECLARE is_tile_emptied BIT;
 
 	START TRANSACTION;
     -- Get player current TileID
@@ -483,24 +493,29 @@ BEGIN
     SELECT TileRow, TileCol INTO current_tile_row, current_tile_col
     FROM tb_Tile
     WHERE TileID = current_tile_id;
-    
+
     -- Get player target tile position
-    SELECT TileID, IsOccupied, ItemTYpe, IsEmptied INTO target_tile_id, target_tile_occupied_state, item_type, is_tile_emptied
+    SELECT TileID INTO target_tile_id
     FROM tb_Tile
     WHERE TileRow = pTileRow AND
 		TileCol = pTileCol;
-
-    -- If target tile is legal, update tb_game_player
+    
+	-- Check if target tile state
+	SELECT IsOccupied INTO target_tile_occupied_state
+    FROM tb_Tile
+    WHERE TileID = target_tile_id;
+    
+    -- WHen target tile is legal and absolute valud equal to 1
     IF target_tile_occupied_state = 0 AND 
-    ((ABS(pTileRow - current_tile_row) = 1 AND pTileCol = current_tile_col) OR
-    (pTileRow = current_tile_row AND ABS(pTileCol - current_tile_col) = 1))
+		((ABS(pTileRow - current_tile_row) = 1 AND pTileCol = current_tile_col) OR
+		(pTileRow = current_tile_row AND ABS(pTileCol - current_tile_col) = 1))
     THEN
 		-- Update original tile state
         UPDATE tb_tile
         SET IsOccupied = 0
         WHERE TileID = current_tile_id;
                 
-		-- Player movement implement
+		-- Update player position data
 		UPDATE tb_game_player
         SET TileID = target_tile_id
         WHERE PlayerID = pPlayerID;
@@ -513,76 +528,73 @@ BEGIN
         -- Check if tile is emptied
         IF (SELECT IsEmptied FROM tb_Tile WHERE TileID = target_tile_id) = 0
         THEN
-			-- If ItemType in Tile is 1
-			IF item_type = 1
+			-- Check the ItemType on the target tile
+			SELECT ItemID INTO current_item_id
+			FROM tb_Tile_Item 
+			WHERE TileID = target_tile_id;
+            
+			IF current_item_id IS NOT NULL
 			THEN
-				UPDATE tb_game_player
-				SET Score = Score + 10
-				WHERE PlayerID = pPlayerID;
+				-- Get current ItemTypeID from tb_Item
+				SELECT ItemTypeID INTO current_item_type
+				FROM tb_Item
+				WHERE ItemID = current_item_id;
                 
-                -- Get item of current tile
-                SELECT ItemID INTO current_item_id
-                FROM tb_Tile_Item
-                WHERE TileID = target_tile_id;
+				IF current_item_type = 1
+				THEN
+					-- Player gains 10 points for picking up a Diamond
+					UPDATE tb_game_player
+					SET Score = Score + 10
+					WHERE PlayerID = pPlayerID;
                 
-                IF EXISTS (SELECT 1 FROM tb_Inventory_Item WHERE PlayerID = pPlayerID AND ItemID = 1)
-                THEN
-					UPDATE tb_Inventory_Item
-                    SET Quantity = Quantity + 1
-                    WHERE PlayerID = pPlayerID AND
-						ItemID = 1;
-				ELSE
-					INSERT INTO tb_Inventory_Item (PlayerID, ItemID, Quantity) VALUES (pPlayerID, current_item_id, 1);
-                END IF;
+					-- Update IsEmptied state
+					UPDATE tb_Tile
+					SET IsEmptied = 1
+					WHERE TileID = target_tile_id;
+					SELECT 'You get the Diamond! Score + 10!' AS Message;
+                    
+					IF EXISTS (SELECT 1 FROM tb_Inventory_Item WHERE PlayerID = pPlayerID AND ItemTypeID = current_item_type)
+					THEN
+						-- If item already exists, the number of quantity + 1
+						UPDATE tb_Inventory_Item
+						SET Quantity = Quantity + 1
+						WHERE PlayerID = pPlayerID AND 
+							ItemTypeID = current_item_type;
+					ELSE
+						-- If item not exists, insert new data into the inventory
+                        INSERT INTO tb_Inventory_Item (PlayerID, ItemTypeID, Quantity) VALUES (pPlayerID, current_item_type, 1);
+					END IF;
+				ELSEIF current_item_type = 2
+						THEN				
+						-- Player loses 5 points for picking up a Bomb
+						UPDATE tb_game_player
+						SET Score = Score - 5
+						WHERE PlayerID = pPlayerID;
                 
-                -- Update tile occupied state after movement
-				UPDATE tb_Tile                
-				SET ItemTpe = 0,
-					IsEmptied = 1
-				-- Picking up items off a tile 
-                WHERE TileID = target_tile_id;
-                
-                SELECT 'You get the Diamond! Score + 10!' AS Message;
-			-- If ItemType in Tile is 0
-			ELSEIF (item_type) = 2
-            THEN
-				UPDATE tb_game_player
-				SET Score = Score - 5
-				WHERE PlayerID = pPlayerID;
-                
-				-- Get item of current tile
-                SELECT ItemID INTO current_item_id
-                FROM tb_Tile_Item
-                WHERE TileID = target_tile_id;
-                
-                IF EXISTS (SELECT 1 FROM tb_Inventory_Item WHERE PlayerID = pPlayerID AND ItemID = 2)
-                THEN
-					UPDATE tb_Inventory_Item
-                    SET Quantity = Quantity + 1
-                    WHERE PlayerID = pPlayerID AND
-						ItemID = 2;
-				ELSE
-					INSERT INTO tb_Inventory_Item (PlayerID, ItemID, Quantity) VALUES (pPlayerID, current_item_id, 1);
-                END IF;
-                
-                -- Update tile occupied state after movement
-				UPDATE tb_Tile                
-				SET ItemType = 0,
-					IsEmptied = 1
-				-- Picking up items off a tile 
-                WHERE TileID = target_tile_id;
-                
-				SELECT 'You get the Bomb! Score - 5!' AS Message;
-			ELSE
-				SELECT 'Nothing happened' AS Message;
-			END IF;
-        ELSE
-        	SELECT 'Player movement successfully!' AS Message;
+						-- Update IsEmptied state
+						UPDATE tb_Tile
+						SET IsEmptied = 1
+						WHERE TileID = target_tile_id;
+						SELECT 'You get the Bomb! Score - 5!' AS Message;
+                        
+						IF EXISTS (SELECT 1 FROM tb_Inventory_Item WHERE PlayerID = pPlayerID AND ItemTypeID = current_item_type)
+						THEN
+							-- If item already exists, the number of quantity + 1
+							UPDATE tb_Inventory_Item
+							SET Quantity = Quantity + 1
+							WHERE PlayerID = pPlayerID AND 
+								ItemTypeID = current_item_type;
+						ELSE
+							-- If item not exists, insert new data into the inventory
+							INSERT INTO tb_Inventory_Item (PlayerID, ItemTypeID, Quantity) VALUES (pPlayerID, current_item_type, 1);
+					END IF;                        
+				END IF;
+			END IF;            
         END IF;
-        COMMIT;        
-	ELSE
-		ROLLBACK;
+        COMMIT;
+	ELSE		
         SELECT 'Player movement Fail!' AS Message;
+        ROLLBACK;
     END IF;
 END//
 DELIMITER ;
@@ -590,18 +602,15 @@ DELIMITER ;
 -- 8. Move an Item (NPC effect). [4]
 DROP PROCEDURE IF EXISTS move_an_item;
 DELIMITER //
-CREATE PROCEDURE move_an_item(IN pMapID INT, IN pTileID INT, IN pTileRow INT, IN pTileCol INT)
+CREATE PROCEDURE move_an_item(IN pMapID INT, IN pTileID INT, IN pTargetTileID INT)
 BEGIN
 	DECLARE current_tile_emptied_state INT;
     DECLARE current_tile_item INT;
-    DECLARE current_tile_item_type INT;    
-    DECLARE target_tile_id INT;
 	DECLARE target_tile_emptied_state INT;
 
 	START TRANSACTION;
-
-	-- Check if tile has item
-	SELECT IsEmptied, ItemType INTO current_tile_emptied_state, current_tile_item_type
+	-- Get current tile IsEmptied state and ItemType
+	SELECT IsEmptied INTO current_tile_emptied_state
     FROM tb_Tile
     WHERE TileID = pTileID;
     
@@ -609,32 +618,31 @@ BEGIN
     FROM tb_Tile_Item
     WHERE TileID = pTileID;
     
-	SELECT TileID, IsEmptied INTO target_tile_id, target_tile_emptied_state
+    -- Get current tile IsEmptied state and ItemType
+	SELECT IsEmptied INTO target_tile_emptied_state
     FROM tb_Tile 
-    WHERE TileRow = pTileRow AND
-		TileCol = pTileCol;
+    WHERE TileID = pTargetTileID;
     
     IF (current_tile_emptied_state = 0 AND target_tile_emptied_state = 1)
     THEN
 		-- Update target tile state
 		UPDATE tb_Tile
-        SET IsEmptied = 1, ItemType = 0
+        SET IsEmptied = 1
 		WHERE TileID = pTileID;
     
 		-- Update target tile state
 		UPDATE tb_Tile
-        SET IsEmptied = 0, ItemType = current_tile_item_type
-        WHERE TileRow = pTileRow AND
-			TileCol = pTileCol;
+        SET IsEmptied = 0
+		WHERE TileID = pTargetTileID;
             
 		UPDATE tb_Tile_Item
-        SET TileID = target_tile_id
+        SET TileID = pTargetTileID
         WHERE TileID = pTileID;
-        
+                
 		SELECT "Move an item Successfully!" AS Message;
         COMMIT;
 	ELSE
-		SELECT "Move an item Fail!" AS Message;
+		SELECT "The target tile is illegal" AS Message;
         ROLLBACK;
     END IF;
 END//
@@ -701,6 +709,7 @@ BEGIN
 			IsAdministrator = pIsAdministrator
 		WHERE
 			PlayerID = pPlayerID;
+		SELECT 'Update player successfully!' AS Message;
 	ELSE
         SELECT 'This player does not exists' AS Message;
 	END IF;
@@ -749,6 +758,3 @@ BEGIN
 		SELECT "Invalid Game!" AS Message;
 	END IF;
 END//
-
-INSERT INTO tb_ItemType (Type, Harm, Heath) VALUES ('diamond', 0, 10);
-INSERT INTO tb_ItemType (Type, Harm, Heath) VALUES ('bomb', 5, 0);

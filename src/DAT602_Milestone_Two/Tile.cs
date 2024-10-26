@@ -14,5 +14,7 @@ namespace DAT602_MIlestone_Two
         public int ItemType { get; set; }
         public bool IsEmptied { get; set; }
         public bool IsOccupied { get; set; }
+        public bool ItemID { get; set; }
+        public int ItemTypeID { get; set; }
     }
 }

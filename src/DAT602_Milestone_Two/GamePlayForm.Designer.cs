@@ -30,16 +30,6 @@
         {
             this.lblTime = new System.Windows.Forms.Label();
             this.lblTurn = new System.Windows.Forms.Label();
-            this.gbPlayerb = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
             this.gbPlayera = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -51,7 +41,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.gbBoard = new System.Windows.Forms.GroupBox();
-            this.gbPlayerb.SuspendLayout();
+            this.btnBackToPage = new System.Windows.Forms.Button();
+            this.txtStartingTile = new System.Windows.Forms.TextBox();
+            this.txtTargetTile = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblStartingTile = new System.Windows.Forms.Label();
+            this.btnMove = new System.Windows.Forms.Button();
             this.gbPlayera.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +56,7 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Calibri", 15F);
-            this.lblTime.Location = new System.Drawing.Point(630, 19);
+            this.lblTime.Location = new System.Drawing.Point(630, 9);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(136, 31);
             this.lblTime.TabIndex = 18;
@@ -69,113 +66,11 @@
             // 
             this.lblTurn.AutoSize = true;
             this.lblTurn.Font = new System.Drawing.Font("Calibri", 15F);
-            this.lblTurn.Location = new System.Drawing.Point(528, 19);
+            this.lblTurn.Location = new System.Drawing.Point(540, 9);
             this.lblTurn.Name = "lblTurn";
             this.lblTurn.Size = new System.Drawing.Size(72, 31);
             this.lblTurn.TabIndex = 17;
             this.lblTurn.Text = "Turn: ";
-            // 
-            // gbPlayerb
-            // 
-            this.gbPlayerb.Controls.Add(this.label1);
-            this.gbPlayerb.Controls.Add(this.textBox1);
-            this.gbPlayerb.Controls.Add(this.label6);
-            this.gbPlayerb.Controls.Add(this.textBox4);
-            this.gbPlayerb.Controls.Add(this.textBox7);
-            this.gbPlayerb.Controls.Add(this.label8);
-            this.gbPlayerb.Controls.Add(this.label9);
-            this.gbPlayerb.Controls.Add(this.label10);
-            this.gbPlayerb.Controls.Add(this.textBox8);
-            this.gbPlayerb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbPlayerb.Font = new System.Drawing.Font("Calibri", 15F);
-            this.gbPlayerb.Location = new System.Drawing.Point(534, 313);
-            this.gbPlayerb.Name = "gbPlayerb";
-            this.gbPlayerb.Size = new System.Drawing.Size(319, 235);
-            this.gbPlayerb.TabIndex = 16;
-            this.gbPlayerb.TabStop = false;
-            this.gbPlayerb.Text = "PlayerB State";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri", 15F);
-            this.label1.Location = new System.Drawing.Point(26, 189);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 31);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Score";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(105, 190);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(107, 30);
-            this.textBox1.TabIndex = 5;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Calibri", 15F);
-            this.label6.Location = new System.Drawing.Point(176, 139);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 31);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "Bomb";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(102, 139);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(50, 30);
-            this.textBox4.TabIndex = 14;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(256, 140);
-            this.textBox7.Multiline = true;
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(50, 30);
-            this.textBox7.TabIndex = 16;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Calibri", 15F);
-            this.label8.Location = new System.Drawing.Point(30, 89);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(110, 31);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Inventory";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Calibri", 15F);
-            this.label9.Location = new System.Drawing.Point(26, 138);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(70, 31);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "Jewel";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Calibri", 15F);
-            this.label10.Location = new System.Drawing.Point(26, 42);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(74, 31);
-            this.label10.TabIndex = 12;
-            this.label10.Text = "Name";
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(109, 43);
-            this.textBox8.Multiline = true;
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(107, 30);
-            this.textBox8.TabIndex = 13;
             // 
             // gbPlayera
             // 
@@ -285,26 +180,106 @@
             this.gbBoard.Font = new System.Drawing.Font("Calibri", 15F);
             this.gbBoard.Location = new System.Drawing.Point(31, 27);
             this.gbBoard.Name = "gbBoard";
-            this.gbBoard.Size = new System.Drawing.Size(479, 496);
+            this.gbBoard.Size = new System.Drawing.Size(479, 438);
             this.gbBoard.TabIndex = 14;
             this.gbBoard.TabStop = false;
             this.gbBoard.Text = "Game Map";
+            // 
+            // btnBackToPage
+            // 
+            this.btnBackToPage.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.btnBackToPage.Location = new System.Drawing.Point(538, 423);
+            this.btnBackToPage.Name = "btnBackToPage";
+            this.btnBackToPage.Size = new System.Drawing.Size(212, 42);
+            this.btnBackToPage.TabIndex = 19;
+            this.btnBackToPage.Text = "Back To Prev Page";
+            this.btnBackToPage.UseVisualStyleBackColor = true;
+            this.btnBackToPage.Click += new System.EventHandler(this.btnBackToPage_Click);
+            // 
+            // txtStartingTile
+            // 
+            this.txtStartingTile.Location = new System.Drawing.Point(652, 341);
+            this.txtStartingTile.Name = "txtStartingTile";
+            this.txtStartingTile.Size = new System.Drawing.Size(78, 25);
+            this.txtStartingTile.TabIndex = 20;
+            // 
+            // txtTargetTile
+            // 
+            this.txtTargetTile.Location = new System.Drawing.Point(650, 384);
+            this.txtTargetTile.Name = "txtTargetTile";
+            this.txtTargetTile.Size = new System.Drawing.Size(80, 25);
+            this.txtTargetTile.TabIndex = 21;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 15);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "label1";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Calibri", 14F);
+            this.label6.Location = new System.Drawing.Point(541, 298);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(305, 29);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Click button to move an item!";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Calibri", 12F);
+            this.label8.Location = new System.Drawing.Point(541, 381);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(96, 24);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "Target Tile";
+            // 
+            // lblStartingTile
+            // 
+            this.lblStartingTile.AutoSize = true;
+            this.lblStartingTile.Font = new System.Drawing.Font("Calibri", 12F);
+            this.lblStartingTile.Location = new System.Drawing.Point(541, 340);
+            this.lblStartingTile.Name = "lblStartingTile";
+            this.lblStartingTile.Size = new System.Drawing.Size(105, 24);
+            this.lblStartingTile.TabIndex = 25;
+            this.lblStartingTile.Text = "Starting tile";
+            // 
+            // btnMove
+            // 
+            this.btnMove.Font = new System.Drawing.Font("Calibri", 12F);
+            this.btnMove.Location = new System.Drawing.Point(749, 355);
+            this.btnMove.Name = "btnMove";
+            this.btnMove.Size = new System.Drawing.Size(91, 35);
+            this.btnMove.TabIndex = 26;
+            this.btnMove.Text = "Move!";
+            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
             // 
             // GamePlayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(877, 575);
+            this.ClientSize = new System.Drawing.Size(877, 494);
+            this.Controls.Add(this.btnMove);
+            this.Controls.Add(this.lblStartingTile);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtTargetTile);
+            this.Controls.Add(this.txtStartingTile);
+            this.Controls.Add(this.btnBackToPage);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblTurn);
-            this.Controls.Add(this.gbPlayerb);
             this.Controls.Add(this.gbPlayera);
             this.Controls.Add(this.gbBoard);
             this.Name = "GamePlayForm";
             this.Text = "GamePlayForm";
             this.Load += new System.EventHandler(this.GamePlayForm_Load);
-            this.gbPlayerb.ResumeLayout(false);
-            this.gbPlayerb.PerformLayout();
             this.gbPlayera.ResumeLayout(false);
             this.gbPlayera.PerformLayout();
             this.ResumeLayout(false);
@@ -316,16 +291,6 @@
 
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label lblTurn;
-        private System.Windows.Forms.GroupBox gbPlayerb;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.GroupBox gbPlayera;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
@@ -337,5 +302,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.GroupBox gbBoard;
+        private System.Windows.Forms.Button btnBackToPage;
+        private System.Windows.Forms.TextBox txtStartingTile;
+        private System.Windows.Forms.TextBox txtTargetTile;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblStartingTile;
+        private System.Windows.Forms.Button btnMove;
     }
 }

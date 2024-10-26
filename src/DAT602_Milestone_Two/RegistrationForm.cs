@@ -74,11 +74,9 @@ namespace DAT602_MIlestone_Two
                 if (isRegistered)
                 {
                     MessageBox.Show("Player registered successfully");
-
+                    this.Hide();
                     LoginForm loginForm = new LoginForm();
-                    loginForm.ShowDialog();
-
-                    //this.Close();
+                    loginForm.ShowDialog();                    
                 }
                 else
                 {

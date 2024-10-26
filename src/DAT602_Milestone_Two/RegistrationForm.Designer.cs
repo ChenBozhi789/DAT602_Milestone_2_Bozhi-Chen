@@ -37,7 +37,7 @@
             this.lblReenterpwd = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
-            this.lbGamename = new System.Windows.Forms.Label();
+            this.lblGamename = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtPwd
@@ -47,7 +47,7 @@
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.Size = new System.Drawing.Size(206, 30);
-            this.txtPwd.TabIndex = 19;
+            this.txtPwd.TabIndex = 2;
             // 
             // txtUsername
             // 
@@ -55,7 +55,7 @@
             this.txtUsername.Multiline = true;
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(206, 30);
-            this.txtUsername.TabIndex = 18;
+            this.txtUsername.TabIndex = 0;
             // 
             // txtEmail
             // 
@@ -63,7 +63,7 @@
             this.txtEmail.Multiline = true;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(206, 30);
-            this.txtEmail.TabIndex = 17;
+            this.txtEmail.TabIndex = 1;
             // 
             // txtRepwd
             // 
@@ -72,7 +72,7 @@
             this.txtRepwd.Name = "txtRepwd";
             this.txtRepwd.PasswordChar = '*';
             this.txtRepwd.Size = new System.Drawing.Size(206, 30);
-            this.txtRepwd.TabIndex = 16;
+            this.txtRepwd.TabIndex = 3;
             // 
             // btnRegister
             // 
@@ -126,15 +126,15 @@
             this.lblUsername.TabIndex = 11;
             this.lblUsername.Text = "Username";
             // 
-            // lbGamename
+            // lblGamename
             // 
-            this.lbGamename.AutoSize = true;
-            this.lbGamename.Font = new System.Drawing.Font("Calibri", 20F);
-            this.lbGamename.Location = new System.Drawing.Point(22, 22);
-            this.lbGamename.Name = "lbGamename";
-            this.lbGamename.Size = new System.Drawing.Size(368, 41);
-            this.lbGamename.TabIndex = 10;
-            this.lbGamename.Text = "Treasure Hunt Adventure";
+            this.lblGamename.AutoSize = true;
+            this.lblGamename.Font = new System.Drawing.Font("Calibri", 20F);
+            this.lblGamename.Location = new System.Drawing.Point(22, 22);
+            this.lblGamename.Name = "lblGamename";
+            this.lblGamename.Size = new System.Drawing.Size(368, 41);
+            this.lblGamename.TabIndex = 10;
+            this.lblGamename.Text = "Treasure Hunt Adventure";
             // 
             // RegistrationForm
             // 
@@ -150,7 +150,7 @@
             this.Controls.Add(this.lblReenterpwd);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
-            this.Controls.Add(this.lbGamename);
+            this.Controls.Add(this.lblGamename);
             this.Name = "RegistrationForm";
             this.Text = "RegistrationForm";
             this.ResumeLayout(false);
@@ -169,6 +169,6 @@
         private System.Windows.Forms.Label lblReenterpwd;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Label lblUsername;
-        private System.Windows.Forms.Label lbGamename;
+        private System.Windows.Forms.Label lblGamename;
     }
 }

@@ -17,16 +17,24 @@ namespace DAT602_MIlestone_Two
             InitializeComponent();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAddPlayer_Click(object sender, EventArgs e)
         {
             AdminManagerForm adminManagerForm = new AdminManagerForm();
             adminManagerForm.ShowDialog();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEditPlayer_Click(object sender, EventArgs e)
         {
             AdminManagerForm adminManagerForm = new AdminManagerForm();
             adminManagerForm.ShowDialog();
+        }
+
+        private void btnKillRunningGame_Click(object sender, EventArgs e)
+        {
+            int currentGameID = Convert.ToInt32(txtDeleteGame.Text);
+            UserDAO userDAO = new UserDAO();            
+            string deleteMessage = userDAO.KillRunningGame(currentGameID);
+            MessageBox.Show(deleteMessage);
         }
     }
 }
