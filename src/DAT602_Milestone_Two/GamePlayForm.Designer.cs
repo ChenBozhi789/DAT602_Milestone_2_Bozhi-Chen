@@ -198,14 +198,14 @@
             // 
             // txtStartingTile
             // 
-            this.txtStartingTile.Location = new System.Drawing.Point(652, 341);
+            this.txtStartingTile.Location = new System.Drawing.Point(656, 340);
             this.txtStartingTile.Name = "txtStartingTile";
             this.txtStartingTile.Size = new System.Drawing.Size(78, 25);
             this.txtStartingTile.TabIndex = 20;
             // 
             // txtTargetTile
             // 
-            this.txtTargetTile.Location = new System.Drawing.Point(650, 384);
+            this.txtTargetTile.Location = new System.Drawing.Point(656, 381);
             this.txtTargetTile.Name = "txtTargetTile";
             this.txtTargetTile.Size = new System.Drawing.Size(80, 25);
             this.txtTargetTile.TabIndex = 21;
@@ -232,7 +232,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Calibri", 12F);
+            this.label8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.label8.Location = new System.Drawing.Point(541, 381);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(96, 24);
@@ -242,17 +242,17 @@
             // lblStartingTile
             // 
             this.lblStartingTile.AutoSize = true;
-            this.lblStartingTile.Font = new System.Drawing.Font("Calibri", 12F);
+            this.lblStartingTile.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.lblStartingTile.Location = new System.Drawing.Point(541, 340);
             this.lblStartingTile.Name = "lblStartingTile";
-            this.lblStartingTile.Size = new System.Drawing.Size(105, 24);
+            this.lblStartingTile.Size = new System.Drawing.Size(110, 24);
             this.lblStartingTile.TabIndex = 25;
-            this.lblStartingTile.Text = "Starting tile";
+            this.lblStartingTile.Text = "Starting Tile";
             // 
             // btnMove
             // 
             this.btnMove.Font = new System.Drawing.Font("Calibri", 12F);
-            this.btnMove.Location = new System.Drawing.Point(749, 355);
+            this.btnMove.Location = new System.Drawing.Point(742, 355);
             this.btnMove.Name = "btnMove";
             this.btnMove.Size = new System.Drawing.Size(91, 35);
             this.btnMove.TabIndex = 26;

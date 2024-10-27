@@ -102,10 +102,11 @@ namespace DAT602_MIlestone_Two
 
         private void btnMove_Click(object sender, EventArgs e)
         {
+            GlobalVariable.UserID = 1;
             int TileID = Convert.ToInt16(txtStartingTile.Text);
             int targetTileID = Convert.ToInt16(txtTargetTile.Text);
             UserDAO userDAO = new UserDAO();
-            bool moveResult = userDAO.move_an_item(TileID, targetTileID);
+            bool moveResult = userDAO.move_an_item(GlobalVariable.MapID, TileID, targetTileID);
 
             if (moveResult)
             {

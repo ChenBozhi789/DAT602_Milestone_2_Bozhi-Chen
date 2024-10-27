@@ -446,12 +446,11 @@ CREATE PROCEDURE move_an_item(IN pMapID INT, IN pTileID INT, IN pTargetTileID IN
 BEGIN
 	DECLARE current_tile_emptied_state INT;
     DECLARE current_tile_item INT;
-    DECLARE current_tile_item_type INT;    
 	DECLARE target_tile_emptied_state INT;
 
 	START TRANSACTION;
-	-- Get current tile IsEmptied state and ItemType
-	SELECT IsEmptied, ItemType INTO current_tile_emptied_state, current_tile_item_type
+	-- Get current tile IsEmptied state
+	SELECT IsEmptied INTO current_tile_emptied_state
     FROM tb_Tile
     WHERE TileID = pTileID;
     
@@ -459,7 +458,11 @@ BEGIN
     FROM tb_Tile_Item
     WHERE TileID = pTileID;
     
-    -- Get current tile IsEmptied state and ItemType
+--  SELECT t.TileID, COALESCE(tb_Tile_Item.ItemID, 0) AS ItemID INTO current_tile_emptied_state, current_tile_item
+-- 	FROM tb_Tile t
+-- 	LEFT JOIN tb_Tile_Item ON t.TileID = tb_Tile_Item.TileID;
+    
+    -- Get current tile IsEmptied state
 	SELECT IsEmptied INTO target_tile_emptied_state
     FROM tb_Tile 
     WHERE TileID = pTargetTileID;
@@ -468,26 +471,24 @@ BEGIN
     THEN
 		-- Update target tile state
 		UPDATE tb_Tile
-        SET IsEmptied = 1, ItemType = 0
+        SET IsEmptied = 1
 		WHERE TileID = pTileID;
     
 		-- Update target tile state
 		UPDATE tb_Tile
-        SET IsEmptied = 0, ItemType = current_tile_item_type
+        SET IsEmptied = 0
 		WHERE TileID = pTargetTileID;
             
 		UPDATE tb_Tile_Item
         SET TileID = pTargetTileID
         WHERE TileID = pTileID;
-        
+                
 		SELECT "Move an item Successfully!" AS Message;
         COMMIT;
 	ELSE
-		SELECT "The target tile is illegal" AS Message;
         ROLLBACK;
     END IF;
 END//
-DELIMITER ;
 
 -- 9. Kill running games. [4]
 DROP PROCEDURE IF EXISTS kill_running_game;

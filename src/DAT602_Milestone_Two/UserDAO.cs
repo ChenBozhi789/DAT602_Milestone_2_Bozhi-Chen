@@ -303,7 +303,7 @@ namespace DAT602_MIlestone_Two
         }
 
         // 8. Move an Item (NPC effect)
-        public bool move_an_item(int itemID, int targetTileID)
+        public bool move_an_item(int MapID, int itemID, int targetTileID)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
