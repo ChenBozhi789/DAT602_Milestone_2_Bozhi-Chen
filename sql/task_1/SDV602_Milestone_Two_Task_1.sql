@@ -51,7 +51,6 @@ CREATE TABLE tb_Tile (
 	MapID INT(10),
 	TileRow INT(10),
 	TileCol INT(10),
-	ItemType INT NOT NULL DEFAULT 0,
     IsEmptied BIT DEFAULT 1,
     IsOccupied BIT DEFAULT 0,
 	FOREIGN KEY (MapID) REFERENCES tb_Map(MapID)
@@ -609,7 +608,7 @@ BEGIN
 	DECLARE target_tile_emptied_state INT;
 
 	START TRANSACTION;
-	-- Get current tile IsEmptied state and ItemType
+	-- Get current tile IsEmptied state
 	SELECT IsEmptied INTO current_tile_emptied_state
     FROM tb_Tile
     WHERE TileID = pTileID;
@@ -618,7 +617,7 @@ BEGIN
     FROM tb_Tile_Item
     WHERE TileID = pTileID;
     
-    -- Get current tile IsEmptied state and ItemType
+    -- Get current tile IsEmptied state
 	SELECT IsEmptied INTO target_tile_emptied_state
     FROM tb_Tile 
     WHERE TileID = pTargetTileID;
