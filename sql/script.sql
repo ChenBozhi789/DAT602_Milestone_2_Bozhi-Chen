@@ -122,17 +122,17 @@ main_code: BEGIN
 		SELECT 'This account does not exist' AS Message;
         LEAVE main_code;
 	END IF;
-    
+		
     -- Check if player is locked
     IF EXISTS (SELECT 1 FROM tb_Player p WHERE p.Attempt >= 5 AND Email = pEmail)
     THEN
 		UPDATE tb_Player
 		SET LockState = 1
 		WHERE Email = pEmail;
-		SELECT 'Your account has been locked out' AS Message;
+		SELECT 'This account already lock out' AS Message;
         LEAVE main_code;
 	END IF;
-    
+        
 	-- Check if login credentials is valid
     IF EXISTS (SELECT 1 FROM tb_Player p WHERE Email = pEmail AND Password = pPassword)
     THEN

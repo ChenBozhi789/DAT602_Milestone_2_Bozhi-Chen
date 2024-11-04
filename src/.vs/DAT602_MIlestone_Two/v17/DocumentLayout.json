@@ -3,32 +3,28 @@
   "WorkspaceRootPath": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|d:\\my_work\\dat602\\milestone_2\\dat602_milestone_two\\src\\dat602_milestone_two\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\userdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\userdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\gameplayform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|d:\\my_work\\dat602\\milestone_2\\dat602_milestone_two\\src\\dat602_milestone_two\\gameplayform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\gameplayform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\gameplayform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|d:\\my_work\\dat602\\milestone_2\\dat602_milestone_two\\src\\dat602_milestone_two\\gameplayform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\gameplayform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|d:\\my_work\\dat602\\milestone_2\\dat602_milestone_two\\src\\dat602_milestone_two\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\maingamelobby.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\maingamelobby.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\dat602_milestone_two\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|d:\\my_work\\dat602\\milestone_2\\dat602_milestone_two\\src\\dat602_milestone_two\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{1A638C49-4910-41B3-B750-229368FD6439}|DAT602_MIlestone_Two\\DAT602_Milestone_Two.csproj|solutionrelative:dat602_milestone_two\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,17 +34,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\Program.cs",
               "RelativeDocumentMoniker": "DAT602_Milestone_Two\\Program.cs",
               "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\Program.cs",
               "RelativeToolTip": "DAT602_Milestone_Two\\Program.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABIAAAApAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAqwBIAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-18T22:20:51.409Z",
               "IsPinned": true,
@@ -56,55 +52,17 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "UserDAO.cs",
               "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\UserDAO.cs",
               "RelativeDocumentMoniker": "DAT602_Milestone_Two\\UserDAO.cs",
               "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\UserDAO.cs",
               "RelativeToolTip": "DAT602_Milestone_Two\\UserDAO.cs",
-              "ViewState": "AQIAANwAAAAAAAAAAADgv+QAAAAVAAAA",
+              "ViewState": "AQIAAKEAAAAAAAAAAAAiwKwAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-24T07:36:21.959Z",
               "IsPinned": true,
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GamePlayForm.cs",
-              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs",
-              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\GamePlayForm.cs",
-              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs",
-              "RelativeToolTip": "DAT602_Milestone_Two\\GamePlayForm.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAASwEYAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T13:54:55.224Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GamePlayForm.cs [Design]",
-              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs",
-              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\GamePlayForm.cs",
-              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs [Design]",
-              "RelativeToolTip": "DAT602_Milestone_Two\\GamePlayForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T13:54:54.182Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Map.cs",
-              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\Map.cs",
-              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\Map.cs",
-              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\Map.cs",
-              "RelativeToolTip": "DAT602_Milestone_Two\\Map.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T07:43:29.651Z",
-              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -132,26 +90,53 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Tile.cs",
-              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\Tile.cs",
-              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\Tile.cs",
-              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\Tile.cs",
-              "RelativeToolTip": "DAT602_Milestone_Two\\Tile.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAoAAAA",
+              "DocumentIndex": 1,
+              "Title": "GamePlayForm.cs",
+              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs",
+              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\GamePlayForm.cs",
+              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs",
+              "RelativeToolTip": "DAT602_Milestone_Two\\GamePlayForm.cs",
+              "ViewState": "AQIAADIAAAAAAAAAAAAiwDcAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-01T05:39:52.012Z"
+              "WhenOpened": "2024-11-04T01:44:17.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GamePlayForm.cs [Design]",
+              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs",
+              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\GamePlayForm.cs",
+              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\GamePlayForm.cs [Design]",
+              "RelativeToolTip": "DAT602_Milestone_Two\\GamePlayForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T01:44:15.897Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginForm.cs",
+              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\LoginForm.cs",
+              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\LoginForm.cs",
+              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\LoginForm.cs",
+              "RelativeToolTip": "DAT602_Milestone_Two\\LoginForm.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAYwDAAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T01:27:06.957Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "MainGameLobby.cs [Design]",
-              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\MainGameLobby.cs",
-              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\MainGameLobby.cs",
-              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\MainGameLobby.cs [Design]",
-              "RelativeToolTip": "DAT602_Milestone_Two\\MainGameLobby.cs [Design]",
+              "Title": "LoginForm.cs [Design]",
+              "DocumentMoniker": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\LoginForm.cs",
+              "RelativeDocumentMoniker": "DAT602_Milestone_Two\\LoginForm.cs",
+              "ToolTip": "D:\\my_work\\DAT602\\Milestone_2\\DAT602_Milestone_Two\\src\\DAT602_Milestone_Two\\LoginForm.cs [Design]",
+              "RelativeToolTip": "DAT602_Milestone_Two\\LoginForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-01T01:33:36.46Z"
+              "WhenOpened": "2024-11-04T01:27:04.425Z",
+              "EditorCaption": " [Design]"
             }
           ]
         },

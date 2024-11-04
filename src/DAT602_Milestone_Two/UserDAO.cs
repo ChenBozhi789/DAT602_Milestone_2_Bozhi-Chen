@@ -45,7 +45,7 @@ namespace DAT602_MIlestone_Two
                             {
                                 return 0;
                             }
-                            else if (resultMessage == "You account has been locked out")
+                            else if (resultMessage == "This account already lock out")
                             {
                                 return -1;
                             }
